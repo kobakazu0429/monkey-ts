@@ -1,12 +1,13 @@
 import { type Token } from "../token/token.js";
 import { type BlockStatement } from "./BlockStatement.js";
-import { type InfixExpression } from "./InfixExpression.js";
-import { type Expression, nodeMemberAssert } from "./ast.js";
+import { type Expression, type TExpression, nodeMemberAssert } from "./ast.js";
 
-export class IfExpression implements Expression {
+export class IfExpression<E extends TExpression = TExpression>
+  implements Expression
+{
   constructor(
     private token: Token,
-    private _condition?: InfixExpression,
+    private _condition?: E,
     private _consequence?: BlockStatement,
     private _alternative?: BlockStatement
   ) {}
@@ -19,12 +20,12 @@ export class IfExpression implements Expression {
     this._alternative = alternative;
   }
 
-  get condition(): InfixExpression {
+  get condition(): E {
     nodeMemberAssert(!!this._condition, "condition");
     return this._condition!;
   }
 
-  set condition(condition: InfixExpression) {
+  set condition(condition: E) {
     this._condition = condition;
   }
 

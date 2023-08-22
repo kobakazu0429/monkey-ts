@@ -9,6 +9,7 @@ import { type InfixExpression } from "./InfixExpression.js";
 import { type IntegerLiteral } from "./IntegerLiteral.js";
 import { type LetStatement } from "./LetStatement.js";
 import { type PrefixExpression } from "./PrefixExpression.js";
+import { type Program } from "./Program.js";
 import { type ReturnStatement } from "./ReturnStatement.js";
 
 const assert = (expression: boolean, message?: string): never | void => {
@@ -48,6 +49,7 @@ export type TExpression =
   | InfixExpression;
 
 export type TStatement =
+  | Program
   | LetStatement
   | ReturnStatement
   | BlockStatement

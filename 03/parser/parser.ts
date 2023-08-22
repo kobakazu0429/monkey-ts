@@ -45,17 +45,6 @@ export function assertExists<T>(
   }
 }
 
-type Class<T = unknown> = { new (...args: any[]): T };
-export function assertInstanceof<T extends Class>(
-  v: unknown,
-  instance: T,
-  target = ""
-): asserts v is InstanceType<T> {
-  if (!(v instanceof instance)) {
-    throw new Error(`${target} should be instanceof ${instance.name}`.trim());
-  }
-}
-
 export class Parser {
   private curToken!: Token;
   private peekToken!: Token;
@@ -254,12 +243,8 @@ export class Parser {
     this.nextToken();
 
     const parsedConditionExpression = this.parseExpression(precedences.LOWEST)!;
+
     assertExists(parsedConditionExpression, "parsedConditionExpression");
-    assertInstanceof(
-      parsedConditionExpression,
-      InfixExpression,
-      "parsedConditionExpression"
-    );
     expression.condition = parsedConditionExpression;
 
     if (!this.expectPeek(token.RPAREN)) {
